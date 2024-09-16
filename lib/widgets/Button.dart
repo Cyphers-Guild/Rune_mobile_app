@@ -15,7 +15,7 @@ class Button extends StatelessWidget {
     return ElevatedButton(
         style: ButtonStyle(
             minimumSize: MaterialStateProperty.all(
-                Size(mediaQuery(context).width * 0.9, 50)),
+                Size(mediaQuery(context).width * 0.8, 50)),
             backgroundColor: MaterialStateProperty.all(green1)),
         onPressed: () {
           if (action != null) {

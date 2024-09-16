@@ -1,3 +1,4 @@
+import 'package:flutter_svg/svg.dart';
 import 'package:rune/imports.dart';
 
 import 'package:rune/widgets/backgroundWidget.dart';
@@ -7,11 +8,27 @@ class SelectLevel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Map<String, dynamic>> levelDetails = [
+      {'title': 'Newbie', 'icon': 'assets/svgs/rook.svg'},
+      {'title': 'Beginner', 'icon': 'assets/svgs/knight.svg'},
+      {'title': 'Intermediate', 'icon': 'assets/svgs/bishop.svg'},
+      {'title': 'Advanced', 'icon': 'assets/svgs/queen.svg'},
+    ];
     List<Widget> levels = List.generate(
         4,
         (index) => Container(
+              width: mediaQuery(context).width * 0.4,
+              height: 130,
               decoration:
                   const BoxDecoration(color: Color.fromARGB(255, 38, 48, 43)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(levelDetails[index]['icon']),
+                  5.0.sbH,
+                  Text(levelDetails[index]['title'])
+                ],
+              ),
             ));
     return BackgroundWidget(
       child: Column(
@@ -36,13 +53,15 @@ class SelectLevel extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           50.0.sbH,
-          const Expanded(
+          Expanded(
               child: Wrap(
-            children: [],
+            spacing: 20,
+            runSpacing: 20,
+            children: [...levels],
           )),
           Button(
             text: 'Next',
-            action: () => Navigator.pushNamed(context, ''),
+            action: () => Navigator.pushNamed(context, 'selectWallet'),
           )
         ],
       ),

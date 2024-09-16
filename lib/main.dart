@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rune/imports.dart';
+import 'package:rune/screens/onboarding/selectWallet.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         'selectAvatar': (context) => const SelectAvatar(),
         'userName': (context) => const Username(),
         'selectLevel': (context) => const SelectLevel(),
+        'selectWallet': (context) => const SelectWallet(),
       },
     );
   }
