@@ -398,54 +398,77 @@ class _GameBoardState extends State<GameBoard> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Column(
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(Icons.electric_bolt_outlined),
-                      3.0.sbW,
-                      Text(
-                        'Blitz',
-                        style: TextStyle(fontWeight: FontWeight.w700),
+                      Row(
+                        children: [
+                          Icon(Icons.electric_bolt_outlined),
+                          3.0.sbW,
+                          Text(
+                            'Blitz',
+                            style: TextStyle(fontWeight: FontWeight.w700),
+                          ),
+                        ],
                       ),
+                      Container(
+                        padding: EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: kBorderGray),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Row(children: [
+                          Icon(
+                            Icons.radio_button_checked_rounded,
+                            color: Colors.red,
+                            size: 14,
+                          ),
+                          3.0.sbW,
+                          Text('1.5k')
+                        ]),
+                      )
                     ],
                   ),
-                  Container(
-                    padding: EdgeInsets.all(2),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: kBorderGray),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Row(children: [
-                      Icon(
-                        Icons.radio_button_checked_rounded,
-                        color: Colors.red,
-                        size: 14,
+                  40.0.sbH,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: kBorderGray),
+                                borderRadius: BorderRadius.circular(5)),
+                            height: 25,
+                            width: mediaQuery(context).width * 0.40,
+                            child: Wrap(
+                              spacing: 4.0, // Gap between adjacent pieces
+                              runSpacing: 4.0, // Gap between lines
+                              children: blackCaptured
+                                  .map((piece) => Image.asset(piece.imgPath,
+                                      width: 20, height: 20))
+                                  .toList(),
+                            ),
+                          ),
+                          5.0.sbH,
+                          PlayerTimer(
+                              isWhite: true,
+                              timeString:
+                                  ' ${_whiteTime ~/ 60}:${(_whiteTime % 60).toString().padLeft(2, '0')}:00',
+                              isWhiteTurn: _isWhiteTurn),
+                        ],
                       ),
-                      3.0.sbW,
-                      Text('1.5k')
-                    ]),
-                  )
+                      GamePlayerProfile(),
+                    ],
+                  ),
                 ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                PlayerTimer(
-                    isWhite: true,
-                    timeString:
-                        ' ${_blackTime ~/ 60}:${(_blackTime % 60).toString().padLeft(2, '0')}',
-                    isWhiteTurn: _isWhiteTurn),
 
-                // White Timer
-                PlayerTimer(
-                    isWhite: false,
-                    timeString:
-                        ' ${_whiteTime ~/ 60}:${(_whiteTime % 60).toString().padLeft(2, '0')}',
-                    isWhiteTurn: !_isWhiteTurn),
-              ],
-            ),
             Padding(
               padding: const EdgeInsets.only(
                   right: 8.0, left: 8, top: 50, bottom: 20),
@@ -508,41 +531,133 @@ class _GameBoardState extends State<GameBoard> {
             ),
             const SizedBox(height: 20),
             // Captured Pieces (White)
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    height: 50,
-                    child: Wrap(
-                      spacing: 4.0, // Gap between adjacent pieces
-                      runSpacing: 4.0, // Gap between lines
-                      children: blackCaptured
-                          .map((piece) =>
-                              Image.asset(piece.imgPath, width: 40, height: 40))
-                          .toList(),
-                    ),
-                  ),
-                  Container(
-                    height: 50,
-                    child: Wrap(
-                      alignment: WrapAlignment.center,
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      spacing: 4.0, // Gap between adjacent pieces
-                      runSpacing: 4.0, // Gap between lines
-                      children: whiteCaptured
-                          .map((piece) =>
-                              Image.asset(piece.imgPath, width: 40, height: 40))
-                          .toList(),
-                    ),
+                  GamePlayerProfile(),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      PlayerTimer(
+                          isWhite: false,
+                          timeString:
+                              ' ${_blackTime ~/ 60}:${(_blackTime % 60).toString().padLeft(2, '0')}:00',
+                          isWhiteTurn: !_isWhiteTurn),
+                      5.0.sbH,
+                      Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: kBorderGray),
+                            borderRadius: BorderRadius.circular(5)),
+                        height: 25,
+                        width: mediaQuery(context).width * 0.40,
+                        child: Wrap(
+                          spacing: 4.0, // Gap between adjacent pieces
+                          runSpacing: 4.0, // Gap between lines
+                          children: whiteCaptured
+                              .map((piece) => Image.asset(piece.imgPath,
+                                  width: 20, height: 20))
+                              .toList(),
+                        ),
+                      ),
+                    ],
                   )
                 ],
               ),
             ),
+
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  GameBoardButtons(
+                    icon: Icons.logout,
+                  ),
+                  GameBoardButtons(
+                    icon: Icons.person,
+                  ),
+                  GameBoardButtons(
+                    icon: Icons.arrow_back,
+                  ),
+                  GameBoardButtons(
+                    icon: Icons.arrow_forward,
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
+    );
+  }
+}
+
+class GamePlayerProfile extends StatelessWidget {
+  const GamePlayerProfile({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        decoration: BoxDecoration(
+            border: Border.all(color: kBorderGray),
+            borderRadius: BorderRadius.circular(10)),
+        padding: EdgeInsets.all(3),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CircleAvatar(
+              radius: 20,
+            ),
+            10.0.sbW,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Remy Arinze",
+                  style: TextStyle(fontSize: 12),
+                ),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.badge,
+                      size: 13,
+                    ),
+                    3.0.sbW,
+                    Text(
+                      'Rank 12',
+                      style: TextStyle(fontSize: 11),
+                    )
+                  ],
+                )
+              ],
+            )
+          ],
+        ));
+  }
+}
+
+class GameBoardButtons extends StatelessWidget {
+  const GameBoardButtons({super.key, required this.icon});
+
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: mediaQuery(context).width * 0.24,
+      height: 50,
+      decoration: BoxDecoration(color: kBorderGray),
+      child: Center(
+          child: Icon(
+        icon,
+        size: 15,
+      )),
     );
   }
 }
@@ -562,37 +677,25 @@ class PlayerTimer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.45,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          isWhite
-              ? CircleAvatar(
-                  backgroundColor: kTileAccent,
-                  radius: 30,
-                  child: Icon(Icons.person),
-                )
-              : Text(_timeString as String,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: _isWhiteTurn ? Colors.black : Colors.white,
-                  )),
-          isWhite
-              ? Text(_timeString as String,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: _isWhiteTurn ? Colors.black : Colors.white,
-                  ))
-              : CircleAvatar(
-                  backgroundColor: kTileAccent,
-                  radius: 30,
-                  child: Icon(Icons.person),
-                ),
-        ],
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        color: kBorderGray,
       ),
+      child: Row(children: [
+        Icon(
+          Icons.timer,
+          color: Color.fromARGB(255, 0, 140, 255),
+        ),
+        Text(_timeString as String,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+              color:
+                  _isWhiteTurn ? Color.fromARGB(255, 0, 140, 255) : kTileAccent,
+            )),
+      ]),
     );
   }
 }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 Color kBgColor = Color.fromARGB(255, 255, 255, 255);
-Color kTileAccent = Color.fromARGB(255, 0, 0, 0);
+Color kTileAccent = Color.fromARGB(255, 20, 31, 26);
 Color kTextColor = Color.fromARGB(255, 20, 31, 26);
-Color kBorderGray = Color.fromARGB(125, 137, 148, 163);
+Color kBorderGray = Color.fromARGB(90, 137, 148, 163);
+Color kGrayAccent = Color.fromARGB(91, 137, 148, 163);
 
 Color bgColor = Color.fromARGB(255, 20, 31, 26);
 Color green1 = Color.fromARGB(255, 12, 122, 67);

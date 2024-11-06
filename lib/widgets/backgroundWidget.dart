@@ -11,10 +11,10 @@ class BackgroundWidget extends StatelessWidget {
       body: Stack(
         alignment: Alignment.center,
         children: [
-          SvgPicture.asset(
-            'assets/svgs/bgImage.svg',
-            width: mediaQuery(context).width,
+          Container(
+            color: Colors.white,
             height: mediaQuery(context).height,
+            width: mediaQuery(context).width,
           ),
           SafeArea(
               child: Padding(

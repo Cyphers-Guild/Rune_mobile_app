@@ -3,10 +3,12 @@ import 'package:rune/imports.dart';
 
 class Button extends StatelessWidget {
   final String text;
+  final double? height;
   final void Function()? action;
   const Button({
     required this.text,
     this.action,
+    this.height,
     super.key,
   });
 
@@ -15,8 +17,8 @@ class Button extends StatelessWidget {
     return ElevatedButton(
         style: ButtonStyle(
             minimumSize: MaterialStateProperty.all(
-                Size(mediaQuery(context).width * 0.8, 50)),
-            backgroundColor: MaterialStateProperty.all(green1)),
+                Size(mediaQuery(context).width * 0.8, height ?? 50)),
+            backgroundColor: MaterialStateProperty.all(bgColor)),
         onPressed: () {
           if (action != null) {
             action!();

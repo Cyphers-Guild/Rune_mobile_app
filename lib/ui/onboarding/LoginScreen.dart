@@ -22,12 +22,12 @@ class LoginScreen extends StatelessWidget {
           50.0.sbH,
           Button(
             text: 'Connect a wallet',
-            action: () => Navigator.pushNamed(context, 'selectAvatar'),
+            action: () => Navigator.pushNamed(context, 'userName'),
           ),
           20.0.sbH,
           Button(
             text: 'Continue as guest',
-            action: () => Navigator.pushNamed(context, 'gameboard'),
+            action: () => Navigator.pushNamed(context, 'home'),
           )
         ],
       ),

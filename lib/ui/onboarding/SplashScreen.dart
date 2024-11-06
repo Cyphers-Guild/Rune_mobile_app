@@ -1,6 +1,5 @@
 import 'package:flutter_svg/svg.dart';
 import 'package:rune/imports.dart';
-import 'package:rune/ui/onboarding/IntroScreen.dart';
 import 'package:rune/widgets/backgroundWidget.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -12,7 +11,7 @@ class SplashScreen extends StatelessWidget {
         context,
         MaterialPageRoute(
             builder: (context) =>
-                IntroScreen()), // Replace with your new screen
+                LoginScreen()), // Replace with your new screen
       );
     });
   }
@@ -23,7 +22,7 @@ class SplashScreen extends StatelessWidget {
 
     return BackgroundWidget(
       child: Center(
-        child: SvgPicture.asset('assets/svgs/titledLogo.svg'),
+        child: SvgPicture.asset('assets/svgs/logo.svg'),
       ),
     );
   }
