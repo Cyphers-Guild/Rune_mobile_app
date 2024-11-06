@@ -18,7 +18,8 @@ class BackgroundWidget extends StatelessWidget {
           ),
           SafeArea(
               child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10), child: child))
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: child))
         ],
       ),
     );

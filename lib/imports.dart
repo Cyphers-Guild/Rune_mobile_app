@@ -1,12 +1,12 @@
 export 'package:flutter/material.dart';
 
 //? Screens
-export 'package:rune/screens/GameBoard.dart';
-export 'package:rune/screens/onboarding/LoginScreen.dart';
-export 'package:rune/screens/onboarding/SplashScreen.dart';
-export 'package:rune/screens/onboarding/Username.dart';
-export 'package:rune/screens/onboarding/selectAvatar.dart';
-export 'package:rune/screens/onboarding/selectLevel.dart';
+export 'package:rune/ui/views/GameBoard.dart';
+export 'package:rune/ui/onboarding/LoginScreen.dart';
+export 'package:rune/ui/onboarding/SplashScreen.dart';
+export 'package:rune/ui/onboarding/Username.dart';
+export 'package:rune/ui/onboarding/selectAvatar.dart';
+export 'package:rune/ui/onboarding/selectLevel.dart';
 
 //? widgets
 export 'package:rune/widgets/Button.dart';

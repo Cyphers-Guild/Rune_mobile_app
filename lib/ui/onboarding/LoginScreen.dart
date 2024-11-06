@@ -20,13 +20,14 @@ class LoginScreen extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           50.0.sbH,
-          const Button(
-            text: 'First Time Player',
+          Button(
+            text: 'Connect a wallet',
+            action: () => Navigator.pushNamed(context, 'selectAvatar'),
           ),
           20.0.sbH,
           Button(
-            text: 'Returning Player',
-            action: () => Navigator.pushNamed(context, 'selectAvatar'),
+            text: 'Continue as guest',
+            action: () => Navigator.pushNamed(context, 'gameboard'),
           )
         ],
       ),

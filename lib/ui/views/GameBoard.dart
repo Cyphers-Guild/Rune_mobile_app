@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:rune/helpers/constants.dart';
+import 'package:rune/imports.dart';
 import 'package:rune/widgets/piece.dart';
 
 class GameBoard extends StatefulWidget {
@@ -396,71 +397,112 @@ class _GameBoardState extends State<GameBoard> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 18.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  PlayerTimer(
-                      isWhite: true,
-                      timeString:
-                          ' ${_blackTime ~/ 60}:${(_blackTime % 60).toString().padLeft(2, '0')}',
-                      isWhiteTurn: _isWhiteTurn),
-
-                  // White Timer
-                  PlayerTimer(
-                      isWhite: false,
-                      timeString:
-                          ' ${_whiteTime ~/ 60}:${(_whiteTime % 60).toString().padLeft(2, '0')}',
-                      isWhiteTurn: !_isWhiteTurn),
+                  Row(
+                    children: [
+                      Icon(Icons.electric_bolt_outlined),
+                      3.0.sbW,
+                      Text(
+                        'Blitz',
+                        style: TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: kBorderGray),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Row(children: [
+                      Icon(
+                        Icons.radio_button_checked_rounded,
+                        color: Colors.red,
+                        size: 14,
+                      ),
+                      3.0.sbW,
+                      Text('1.5k')
+                    ]),
+                  )
                 ],
               ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                PlayerTimer(
+                    isWhite: true,
+                    timeString:
+                        ' ${_blackTime ~/ 60}:${(_blackTime % 60).toString().padLeft(2, '0')}',
+                    isWhiteTurn: _isWhiteTurn),
+
+                // White Timer
+                PlayerTimer(
+                    isWhite: false,
+                    timeString:
+                        ' ${_whiteTime ~/ 60}:${(_whiteTime % 60).toString().padLeft(2, '0')}',
+                    isWhiteTurn: !_isWhiteTurn),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.only(
                   right: 8.0, left: 8, top: 50, bottom: 20),
               child: AspectRatio(
                 aspectRatio: 1,
-                child: GridView.builder(
-                  itemCount: 64,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 8,
-                  ),
-                  itemBuilder: (context, index) {
-                    int row = index ~/ 8;
-                    int col = index % 8;
-                    bool isValidMove = validMoves
-                        .any((move) => move[0] == row && move[1] == col);
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: GridView.builder(
+                    itemCount: 64,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 8,
+                    ),
+                    itemBuilder: (context, index) {
+                      int row = index ~/ 8;
+                      int col = index % 8;
+                      bool isValidMove = validMoves
+                          .any((move) => move[0] == row && move[1] == col);
 
-                    return GestureDetector(
-                      onTap: () => pieceSelected(row, col),
-                      child: Container(
-                        color: (row + col) % 2 == 0 ? kTileAccent : kBgColor,
-                        child: Stack(
-                          children: [
-                            if (board[row][col] != null)
-                              Center(
-                                child: Image.asset(
-                                  board[row][col]!.imgPath,
-                                  width: 40,
-                                  height: 40,
-                                ),
-                              ),
-                            if (isValidMove)
-                              Center(
-                                child: Container(
-                                  width: 20,
-                                  height: 20,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.green.withOpacity(0.5),
+                      return GestureDetector(
+                        onTap: () => pieceSelected(row, col),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: (row + col) % 2 == 0
+                                ? kTileAccent
+                                : Color.fromARGB(255, 232, 237,
+                                    249), //makes the game board checkered
+                          ),
+                          child: Stack(
+                            children: [
+                              if (board[row][col] != null)
+                                Center(
+                                  child: Image.asset(
+                                    board[row][col]!.imgPath,
+                                    width: 40,
+                                    height: 40,
                                   ),
                                 ),
-                              ),
-                          ],
+                              if (isValidMove)
+                                Center(
+                                  child: Container(
+                                    width: 20,
+                                    height: 20,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: const Color.fromARGB(
+                                              255, 122, 145, 122)
+                                          .withOpacity(0.5),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
             ),

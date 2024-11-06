@@ -1,6 +1,6 @@
 import 'package:flutter_svg/svg.dart';
 import 'package:rune/imports.dart';
-import 'package:rune/screens/onboarding/IntroScreen.dart';
+import 'package:rune/ui/onboarding/IntroScreen.dart';
 import 'package:rune/widgets/backgroundWidget.dart';
 
 class SplashScreen extends StatelessWidget {
