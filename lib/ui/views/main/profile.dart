@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rune/helpers/constants.dart';
+import 'package:rune/imports.dart';
 
 class Profile extends StatelessWidget {
   @override
@@ -8,21 +10,7 @@ class Profile extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
-          "4:24",
-          style: TextStyle(color: Colors.black, fontSize: 18),
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.wifi, color: Colors.black),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.battery_full, color: Colors.black),
-            onPressed: () {},
-          ),
-        ],
+        automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -31,16 +19,11 @@ class Profile extends StatelessWidget {
           children: [
             // Profile section
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // Profile Image
-                CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage(
-                      'assets/images/profile.jpg'), // Replace with actual image path
-                ),
-                const SizedBox(width: 16),
+
                 // Profile Info
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,18 +31,18 @@ class Profile extends StatelessWidget {
                     const Text(
                       'Daniel Johnson',
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
                     ),
-                    Row(
+                    const Row(
                       children: [
                         Icon(Icons.star, color: Colors.amber),
-                        const SizedBox(width: 4),
-                        const Text(
+                        SizedBox(width: 4),
+                        Text(
                           'Rank 12',
-                          style: TextStyle(color: Colors.black, fontSize: 16),
+                          style: TextStyle(color: Colors.black, fontSize: 14),
                         ),
                       ],
                     ),
@@ -74,7 +57,7 @@ class Profile extends StatelessWidget {
                       child: const Text(
                         '1500',
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 12,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
@@ -82,35 +65,56 @@ class Profile extends StatelessWidget {
                     ),
                   ],
                 ),
+
+                const CircleAvatar(
+                  radius: 60,
+                  backgroundImage: AssetImage(
+                      'assets/images/boy.png'), // Replace with actual image path
+                )
               ],
             ),
-            const SizedBox(height: 24),
+            24.0.sbH,
 
             // My Collections section
-            const Text(
-              'My collections',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+            Container(
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(3),
+                  border: Border.all(color: Colors.grey.shade400)),
+              child: const Text(
+                'My collections',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
             ),
-            const SizedBox(height: 16),
-            Row(
+            10.0.sbH,
+            Column(
               children: [
-                // Collection images
-                _buildCollectionImage('assets/images/queen.png'),
-                const SizedBox(width: 8),
-                _buildCollectionImage('assets/images/king.png'),
-                const SizedBox(width: 8),
-                _buildCollectionImage(null),
-                const Spacer(),
-                const Text(
-                  'View more',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey,
-                  ),
+                Row(
+                  children: [
+                    // Collection images
+                    _buildCollectionImage(
+                        'assets/images/nfts/queen.png', context),
+                    const SizedBox(width: 8),
+                    _buildCollectionImage(
+                        'assets/images/nfts/king.png', context),
+                    const SizedBox(width: 8),
+                    _buildCollectionImage(null, context),
+                    const Spacer(),
+                  ],
+                ),
+                5.0.sbH,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      'View more',
+                      style: TextStyle(fontSize: 12, color: bgColor),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -118,14 +122,14 @@ class Profile extends StatelessWidget {
 
             // Highlights section
             const Text(
-              'Highlights',
+              'Match History',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
             ),
-            const SizedBox(height: 16),
+            10.0.sbH,
             _buildHighlightCard(
                 'assets/images/user1.png', 'Blitz', 'Checkmate'),
             const SizedBox(height: 16),
@@ -149,10 +153,10 @@ class Profile extends StatelessWidget {
   }
 
   // Helper to build collection images
-  Widget _buildCollectionImage(String? imagePath) {
+  Widget _buildCollectionImage(String? imagePath, BuildContext context) {
     return Container(
-      width: 80,
-      height: 80,
+      width: mediaQuery(context).width * 0.28,
+      height: 100,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.circular(8),
@@ -164,7 +168,7 @@ class Profile extends StatelessWidget {
             : null,
       ),
       child: imagePath == null
-          ? Center(
+          ? const Center(
               child: Icon(
                 Icons.add,
                 color: Colors.grey,
@@ -194,7 +198,7 @@ class Profile extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(Icons.flash_on, color: Colors.black),
+                  const Icon(Icons.flash_on, color: Colors.black),
                   const SizedBox(width: 4),
                   Text(
                     title,
