@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rune/helpers/constants.dart';
+import 'package:rune/helpers/helpers.dart';
 import 'package:rune/imports.dart';
 
 class Profile extends StatelessWidget {
@@ -14,42 +17,60 @@ class Profile extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
             // Profile section
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            Stack(
               children: [
                 // Profile Image
+                const Positioned(
+                  top: 0,
+                  right: 0,
+                  child: CircleAvatar(
+                    radius: 90,
+                    backgroundImage: AssetImage(
+                        'assets/images/boy.png'), // Replace with actual image path
+                  ),
+                ),
 
-                // Profile Info
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Daniel Johnson',
+                      'Daniel',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 45,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
                     ),
-                    const Row(
+                    const Padding(
+                      padding: EdgeInsets.only(left: 20.0),
+                      child: Text(
+                        'Johnson',
+                        style: TextStyle(
+                          fontSize: 45,
+                          fontWeight: FontWeight.bold,
+                          leadingDistribution: TextLeadingDistribution.even,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    50.0.sbH,
+                    Row(
                       children: [
-                        Icon(Icons.star, color: Colors.amber),
+                        SvgPicture.asset('assets/svgs/medal.svg'),
                         SizedBox(width: 4),
                         Text(
                           'Rank 12',
-                          style: TextStyle(color: Colors.black, fontSize: 14),
+                          style: TextStyle(color: Colors.black, fontSize: 13),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
+                    5.0.sbH,
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
+                          horizontal: 10, vertical: 5),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black),
                         borderRadius: BorderRadius.circular(8),
@@ -57,7 +78,7 @@ class Profile extends StatelessWidget {
                       child: const Text(
                         '1500',
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: 10,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
@@ -65,29 +86,17 @@ class Profile extends StatelessWidget {
                     ),
                   ],
                 ),
-
-                const CircleAvatar(
-                  radius: 60,
-                  backgroundImage: AssetImage(
-                      'assets/images/boy.png'), // Replace with actual image path
-                )
               ],
             ),
-            24.0.sbH,
+            25.0.sbH,
 
             // My Collections section
-            Container(
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(3),
-                  border: Border.all(color: Colors.grey.shade400)),
-              child: const Text(
-                'My collections',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+            const Text(
+              'My collections',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
               ),
             ),
             10.0.sbH,
@@ -124,7 +133,7 @@ class Profile extends StatelessWidget {
             const Text(
               'Match History',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),

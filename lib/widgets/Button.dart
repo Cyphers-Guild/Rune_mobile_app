@@ -26,8 +26,10 @@ class Button extends StatelessWidget {
         },
         child: Text(
           text,
-          style: GoogleFonts.montserrat(
-              color: Colors.white, fontWeight: FontWeight.w600),
+          style: TextStyle(
+              fontFamily: 'Ojuju',
+              color: Colors.white,
+              fontWeight: FontWeight.w700),
         ));
   }
 }

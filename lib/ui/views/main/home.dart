@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rune/imports.dart';
 
 class Home extends StatelessWidget {
@@ -47,6 +48,9 @@ class Home extends StatelessWidget {
                 CircleAvatar(
                   backgroundColor: kBorderGray,
                   radius: 15,
+                  child: SvgPicture.asset(
+                    'assets/svgs/medal.svg',
+                  ),
                 ),
               ],
             ),
@@ -64,12 +68,16 @@ class Home extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Stack(
                 children: [
-                  Text("Rune", style: TextStyle(fontSize: 45)),
+                  const Text("Rune",
+                      style: TextStyle(
+                          fontSize: 60,
+                          fontFamily: 'Ojuju',
+                          fontWeight: FontWeight.w700)),
                   Align(
                       alignment: Alignment.topRight,
                       child: SvgPicture.asset('assets/svgs/b.svg')),
                   Padding(
-                    padding: const EdgeInsets.only(top: 43.0),
+                    padding: const EdgeInsets.only(top: 58.0),
                     child: Row(
                       children: [
                         SizedBox(
@@ -79,6 +87,8 @@ class Home extends StatelessWidget {
                             child: GameOptionCard(
                               title: "Competitive\nPlayer vs player",
                               icon: Icons.sports_esports,
+                              widget: SvgPicture.asset(
+                                  'assets/svgs/play_piece.svg'),
                               hasOpacity: false,
                               playerCount: "84 / 24",
                               color: Colors.black,
@@ -115,37 +125,55 @@ class Home extends StatelessWidget {
             ),
             // View More Section
 
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              margin: EdgeInsets.symmetric(vertical: 20),
-              width: mediaQuery(context).width,
-              height: 50,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade500),
-                        borderRadius: BorderRadius.circular(10)),
-                    height: 50,
-                    width: mediaQuery(context).width * 0.7,
+                  Padding(
+                    padding: EdgeInsets.only(left: 10.0, bottom: 5),
+                    child: Text(
+                      'Ongoing Tournament',
+                      style: GoogleFonts.inter(
+                          fontSize: 13, color: Colors.grey.shade500),
+                    ),
                   ),
-                  const SizedBox(width: 8),
                   Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade500),
-                        borderRadius: BorderRadius.circular(10)),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    width: mediaQuery(context).width,
                     height: 50,
-                    width: mediaQuery(context).width * 0.7,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey.shade500),
+                              borderRadius: BorderRadius.circular(10)),
+                          height: 50,
+                          width: mediaQuery(context).width * 0.7,
+                        ),
+                        const SizedBox(width: 8),
+                        Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey.shade500),
+                              borderRadius: BorderRadius.circular(10)),
+                          height: 50,
+                          width: mediaQuery(context).width * 0.7,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
             // Ongoing Tournament Section
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(left: 10.0, right: 10, top: 20),
-              child: Text("Ongoing Tournament",
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+              child: Text(
+                'Last Game Analysis',
+                style: GoogleFonts.inter(
+                    fontSize: 13, color: Colors.grey.shade500),
+              ),
             ),
             ListView(
               shrinkWrap: true,
@@ -176,6 +204,7 @@ class GameOptionCard extends StatelessWidget {
   final Color color;
   final bool? hasOpacity;
   final Color textColor;
+  final Widget? widget;
 
   GameOptionCard({
     required this.title,
@@ -184,6 +213,7 @@ class GameOptionCard extends StatelessWidget {
     this.level,
     this.hasOpacity,
     required this.color,
+    this.widget,
     required this.textColor,
   });
 
@@ -211,7 +241,9 @@ class GameOptionCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(icon, color: textColor, size: 25),
+                widget != null
+                    ? widget!
+                    : Icon(icon, color: textColor, size: 25),
                 const SizedBox(height: 8),
                 Text(
                   title,
@@ -270,11 +302,11 @@ class TournamentListTile extends StatelessWidget {
       ),
       title: Text(
         player,
-        style: TextStyle(fontSize: 14),
+        style: const TextStyle(fontSize: 14),
       ),
       subtitle: Text(
         rank,
-        style: TextStyle(fontSize: 13),
+        style: const TextStyle(fontSize: 13),
       ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,

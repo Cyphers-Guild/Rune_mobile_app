@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
           textTheme: TextTheme(
               bodyLarge: GoogleFonts.montserrat(color: kTextColor),
               bodySmall: GoogleFonts.montserrat(color: kTextColor),
-              bodyMedium: GoogleFonts.montserrat(color: kTextColor))),
+              bodyMedium: TextStyle(fontFamily: 'Ojuju'))),
       home: const SplashScreen(),
       routes: {
         'loginScreen': (context) => const LoginScreen(),
