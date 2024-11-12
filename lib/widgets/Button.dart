@@ -26,10 +26,8 @@ class Button extends StatelessWidget {
         },
         child: Text(
           text,
-          style: TextStyle(
-              fontFamily: 'Ojuju',
-              color: Colors.white,
-              fontWeight: FontWeight.w700),
+          style: GoogleFonts.raleway(
+              color: Colors.white, fontWeight: FontWeight.w700),
         ));
   }
 }

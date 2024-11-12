@@ -1,11 +1,13 @@
 import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rune/helpers/constants.dart';
+
 import 'package:rune/imports.dart';
 
 import 'package:rune/widgets/backgroundWidget.dart';
 
-class SelectWallet extends StatelessWidget {
-  const SelectWallet({super.key});
+class Welcome extends StatelessWidget {
+  const Welcome({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +16,15 @@ class SelectWallet extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(top: 40),
             child: CircleAvatar(
               radius: 40,
+              backgroundColor: kBorderGray,
+              child: SvgPicture.asset(
+                'assets/svgs/logo.svg',
+                width: 25,
+              ),
             ),
           ),
           15.0.sbH,
@@ -28,26 +35,22 @@ class SelectWallet extends StatelessWidget {
           ),
           Text(
             'Runeo123',
-            style: TextStyle(color: green3),
+            style: GoogleFonts.raleway(),
             textAlign: TextAlign.center,
           ),
           50.0.sbH,
           Expanded(
             child: Column(
               children: [
-                SvgPicture.asset('assets/svgs/titledLogo.svg'),
+                SvgPicture.asset('assets/svgs/logo.svg'),
                 40.0.sbH,
                 // ignore: prefer_const_constructors
-                Text(
-                  'To keep track of your data and rewards please connect app to a wellet of your choice ',
-                  textAlign: TextAlign.center,
-                )
               ],
             ),
           ),
           Button(
-            text: 'Select Wallet',
-            action: () => Navigator.pushNamed(context, ''),
+            text: 'Continue',
+            action: () => Navigator.pushNamed(context, 'home'),
           )
         ],
       ),

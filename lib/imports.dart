@@ -8,7 +8,7 @@ export 'package:rune/ui/onboarding/Username.dart';
 export 'package:rune/ui/onboarding/selectAvatar.dart';
 export 'package:rune/ui/onboarding/selectLevel.dart';
 export 'package:rune/ui/views/BottomNav.dart';
-export 'package:rune/ui/onboarding/selectWallet.dart';
+export 'package:rune/ui/onboarding/welcome.dart';
 
 //? widgets
 export 'package:rune/widgets/Button.dart';

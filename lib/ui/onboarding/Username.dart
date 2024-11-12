@@ -2,6 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:rune/helpers/constants.dart';
 import 'package:rune/imports.dart';
 
 import 'package:rune/widgets/backgroundWidget.dart';
@@ -16,10 +19,15 @@ class Username extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(top: 50),
             child: CircleAvatar(
               radius: 40,
+              backgroundColor: kBorderGray,
+              child: SvgPicture.asset(
+                'assets/svgs/logo.svg',
+                width: 25,
+              ),
             ),
           ),
           15.0.sbH,
@@ -28,10 +36,11 @@ class Username extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          10.0.sbH,
-          const Text(
+          2.0.sbH,
+          Text(
             'Experience the next level of chess with Rune',
             textAlign: TextAlign.center,
+            style: GoogleFonts.raleway(),
           ),
           80.0.sbH,
           Expanded(

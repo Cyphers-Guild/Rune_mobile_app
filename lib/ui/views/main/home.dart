@@ -151,6 +151,29 @@ class Home extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10)),
                           height: 50,
                           width: mediaQuery(context).width * 0.7,
+                          child: Row(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(left: 2, right: 10),
+                                height: 45,
+                                width: mediaQuery(context).width * 0.2,
+                                decoration: BoxDecoration(
+                                    color: kBorderGray,
+                                    borderRadius: BorderRadius.circular(5)),
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text('Venny'),
+                                  5.0.sbW,
+                                  Text('VS'),
+                                  5.0.sbW,
+                                  Text('Cal'),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                         const SizedBox(width: 8),
                         Container(

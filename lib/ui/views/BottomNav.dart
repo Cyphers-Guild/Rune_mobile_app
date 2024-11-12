@@ -42,14 +42,15 @@ class _BottomNavState extends State<BottomNav> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Container(
-              height: 80,
+              height: 70,
               margin: const EdgeInsets.only(bottom: 5),
               decoration: BoxDecoration(
                 color: Colors.black, // Background color of navbar
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(30),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   _buildNavItem(Icons.home, 0),
                   _buildNavItem(Icons.emoji_events, 1),
@@ -67,8 +68,8 @@ class _BottomNavState extends State<BottomNav> {
             child: GestureDetector(
               onTap: () => _onItemTapped(2), // Center button index
               child: Container(
-                height: 70,
-                width: 70,
+                height: 65,
+                width: 65,
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: Colors.grey, // Center button color

@@ -24,20 +24,20 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
-          bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: Colors.black,
           ),
           textTheme: TextTheme(
-              bodyLarge: GoogleFonts.montserrat(color: kTextColor),
-              bodySmall: GoogleFonts.montserrat(color: kTextColor),
-              bodyMedium: TextStyle(fontFamily: 'Ojuju'))),
+              bodyLarge: GoogleFonts.raleway(color: kTextColor),
+              bodySmall: GoogleFonts.raleway(color: kTextColor),
+              bodyMedium: const TextStyle(fontFamily: 'Ojuju'))),
       home: const SplashScreen(),
       routes: {
         'loginScreen': (context) => const LoginScreen(),
         'selectAvatar': (context) => const SelectAvatar(),
         'userName': (context) => const Username(),
         'selectLevel': (context) => const SelectLevel(),
-        'selectWallet': (context) => const SelectWallet(),
+        'selectWallet': (context) => const Welcome(),
         'home': (context) => const BottomNav(),
         'gameboard': (context) => GameBoard()
       },

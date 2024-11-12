@@ -2,6 +2,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:rune/imports.dart';
 
 import 'package:rune/widgets/backgroundWidget.dart';
+import 'package:rune/widgets/select_wallet_modal.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -22,7 +23,7 @@ class LoginScreen extends StatelessWidget {
           50.0.sbH,
           Button(
             text: 'Connect a wallet',
-            action: () => Navigator.pushNamed(context, 'userName'),
+            action: () => showWalletDialog(context),
           ),
           20.0.sbH,
           Button(

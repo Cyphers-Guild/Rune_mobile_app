@@ -1,4 +1,5 @@
 import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rune/imports.dart';
 
 import 'package:rune/widgets/backgroundWidget.dart';
@@ -19,14 +20,20 @@ class SelectLevel extends StatelessWidget {
         (index) => Container(
               width: mediaQuery(context).width * 0.4,
               height: 130,
-              decoration:
-                  const BoxDecoration(color: Color.fromARGB(255, 38, 48, 43)),
+              decoration: BoxDecoration(
+                  color: kTileAccent, borderRadius: BorderRadius.circular(5)),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SvgPicture.asset(levelDetails[index]['icon']),
+                  SvgPicture.asset(
+                    levelDetails[index]['icon'],
+                    width: 40,
+                  ),
                   5.0.sbH,
-                  Text(levelDetails[index]['title'])
+                  Text(
+                    levelDetails[index]['title'],
+                    style: GoogleFonts.raleway(color: Colors.white),
+                  )
                 ],
               ),
             ));
@@ -35,10 +42,15 @@ class SelectLevel extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(top: 40),
             child: CircleAvatar(
               radius: 40,
+              backgroundColor: kBorderGray,
+              child: SvgPicture.asset(
+                'assets/svgs/logo.svg',
+                width: 25,
+              ),
             ),
           ),
           15.0.sbH,
@@ -48,9 +60,10 @@ class SelectLevel extends StatelessWidget {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           10.0.sbH,
-          const Text(
+          Text(
             'Your starting Point for match pairings',
             textAlign: TextAlign.center,
+            style: GoogleFonts.raleway(),
           ),
           50.0.sbH,
           Expanded(
