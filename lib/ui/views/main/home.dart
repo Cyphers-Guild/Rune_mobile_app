@@ -11,10 +11,10 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: kBgColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor: kBgColor,
         elevation: 0,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -77,7 +77,7 @@ class Home extends StatelessWidget {
                       alignment: Alignment.topRight,
                       child: SvgPicture.asset('assets/svgs/b.svg')),
                   Padding(
-                    padding: const EdgeInsets.only(top: 58.0),
+                    padding: const EdgeInsets.only(top: 50.0),
                     child: Row(
                       children: [
                         SizedBox(
@@ -147,7 +147,7 @@ class Home extends StatelessWidget {
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey.shade500),
+                              border: Border.all(color: Colors.grey.shade700),
                               borderRadius: BorderRadius.circular(10)),
                           height: 50,
                           width: mediaQuery(context).width * 0.7,
@@ -242,62 +242,67 @@ class GameOptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(12), // Clipping for rounded edges
-      child: Stack(
-        children: [
-          // Backdrop filter for the blur effect
-          BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-            child: Container(
-              color: color.withOpacity(
-                  0.3), // Adjust the opacity to control blur visibility
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, 'gameboard');
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12), // Clipping for rounded edges
+        child: Stack(
+          children: [
+            // Backdrop filter for the blur effect
+            BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+              child: Container(
+                color: color.withOpacity(
+                    0.3), // Adjust the opacity to control blur visibility
+              ),
             ),
-          ),
-          // Main content of the card
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: hasOpacity != null ? color : color.withOpacity(0.5),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                widget != null
-                    ? widget!
-                    : Icon(icon, color: textColor, size: 25),
-                const SizedBox(height: 8),
-                Text(
-                  title,
-                  style: TextStyle(
+            // Main content of the card
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: hasOpacity != null ? color : color.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  widget != null
+                      ? widget!
+                      : Icon(icon, color: textColor, size: 25),
+                  const SizedBox(height: 8),
+                  Text(
+                    title,
+                    style: TextStyle(
+                        color: textColor,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 5),
+                  if (playerCount != null)
+                    Text(
+                      playerCount!,
+                      style: TextStyle(color: textColor, fontSize: 13),
+                    ),
+                  if (level != null)
+                    Text(
+                      level!,
+                      style: TextStyle(color: textColor, fontSize: 13),
+                    ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Icon(
+                      Icons.arrow_forward,
                       color: textColor,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 5),
-                if (playerCount != null)
-                  Text(
-                    playerCount!,
-                    style: TextStyle(color: textColor, fontSize: 13),
+                      size: 16,
+                    ),
                   ),
-                if (level != null)
-                  Text(
-                    level!,
-                    style: TextStyle(color: textColor, fontSize: 13),
-                  ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Icon(
-                    Icons.arrow_forward,
-                    color: textColor,
-                    size: 16,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

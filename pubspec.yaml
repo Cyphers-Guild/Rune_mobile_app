@@ -40,8 +40,9 @@ flutter:
     - assets/images/
     - assets/images/nfts/
     - assets/svgs/
-    - assets/svgs/bottom_nav/
     - assets/svgs/nfts/
+    - assets/svgs/game_buttons/
+    - assets/svgs/bottom_nav/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

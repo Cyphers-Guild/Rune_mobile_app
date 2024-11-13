@@ -9,7 +9,6 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -167,7 +166,7 @@ class Profile extends StatelessWidget {
       width: mediaQuery(context).width * 0.28,
       height: 100,
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
+        border: Border.all(color: const Color.fromARGB(255, 0, 0, 0)),
         borderRadius: BorderRadius.circular(8),
         image: imagePath != null
             ? DecorationImage(
@@ -192,7 +191,7 @@ class Profile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade300),
+        border: Border.all(color: Colors.grey.shade500),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(

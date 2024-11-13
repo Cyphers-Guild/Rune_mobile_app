@@ -15,21 +15,13 @@ class BottomNav extends StatefulWidget {
 }
 
 class _BottomNavState extends State<BottomNav> {
-  List<Widget> screens = [
-    Home(),
-    const Explore(),
-    const Watch(),
-    Mint(),
-    Profile()
-  ];
+  List<Widget> screens = [Home(), Explore(), Watch(), Mint(), Profile()];
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
-    // Handle navigation logic based on the index
-    // Example: Navigator.push(...) or setState(() {...})
   }
 
   @override
@@ -72,10 +64,10 @@ class _BottomNavState extends State<BottomNav> {
                 width: 65,
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: Colors.grey, // Center button color
+                  color: Colors.white, // Center button color
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: Colors.black,
+                    color: Colors.white,
                     width: 6,
                   ),
                 ),

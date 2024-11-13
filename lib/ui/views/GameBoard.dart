@@ -1,10 +1,17 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:iconsax/iconsax.dart';
 
 import 'package:rune/helpers/constants.dart';
 import 'package:rune/imports.dart';
+import 'package:rune/widgets/game_board/game_buttons.dart';
+import 'package:rune/widgets/game_board/game_drawer.dart';
+import 'package:rune/widgets/game_board/player_profile.dart';
+import 'package:rune/widgets/game_board/player_time.dart';
 import 'package:rune/widgets/piece.dart';
 
 class GameBoard extends StatefulWidget {
@@ -389,9 +396,13 @@ class _GameBoardState extends State<GameBoard> {
     super.dispose();
   }
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: GameBoardDrawer(),
       backgroundColor: kBgColor,
       body: SafeArea(
         child: Column(
@@ -413,24 +424,21 @@ class _GameBoardState extends State<GameBoard> {
                           ),
                         ],
                       ),
-                      Container(
-                        padding: EdgeInsets.all(2),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: kBorderGray),
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(children: [
-                          Icon(
-                            Icons.radio_button_checked_rounded,
-                            color: Colors.red,
-                            size: 14,
-                          ),
-                          3.0.sbW,
-                          Text('1.5k')
-                        ]),
+                      GestureDetector(
+                        onTap: () {
+                          _scaffoldKey.currentState?.openDrawer();
+                        },
+                        child: Row(
+                          children: [
+                            Icon(Iconsax.dollar_circle),
+                            5.0.sbW,
+                            Text('Stake'),
+                          ],
+                        ),
                       )
                     ],
                   ),
-                  40.0.sbH,
+                  50.0.sbH,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -441,8 +449,8 @@ class _GameBoardState extends State<GameBoard> {
                         children: [
                           Container(
                             decoration: BoxDecoration(
-                                border: Border.all(color: kBorderGray),
-                                borderRadius: BorderRadius.circular(5)),
+                                border: Border.all(color: Colors.grey.shade200),
+                                borderRadius: BorderRadius.circular(2)),
                             height: 25,
                             width: mediaQuery(context).width * 0.40,
                             child: Wrap(
@@ -468,10 +476,12 @@ class _GameBoardState extends State<GameBoard> {
                 ],
               ),
             ),
-
+            20.0.sbH,
             Padding(
               padding: const EdgeInsets.only(
-                  right: 8.0, left: 8, top: 50, bottom: 20),
+                right: 16,
+                left: 16,
+              ),
               child: AspectRatio(
                 aspectRatio: 1,
                 child: ClipRRect(
@@ -529,7 +539,7 @@ class _GameBoardState extends State<GameBoard> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            20.0.sbH,
             // Captured Pieces (White)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0),
@@ -550,7 +560,7 @@ class _GameBoardState extends State<GameBoard> {
                       5.0.sbH,
                       Container(
                         decoration: BoxDecoration(
-                            border: Border.all(color: kBorderGray),
+                            border: Border.all(color: Colors.white),
                             borderRadius: BorderRadius.circular(5)),
                         height: 25,
                         width: mediaQuery(context).width * 0.40,
@@ -570,132 +580,32 @@ class _GameBoardState extends State<GameBoard> {
             ),
 
             Expanded(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  GameBoardButtons(
-                    icon: Icons.logout,
-                  ),
-                  GameBoardButtons(
-                    icon: Icons.person,
-                  ),
-                  GameBoardButtons(
-                    icon: Icons.arrow_back,
-                  ),
-                  GameBoardButtons(
-                    icon: Icons.arrow_forward,
-                  ),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GameBoardButtons(
+                      icon: 'assets/svgs/game_buttons/exit.svg',
+                      onclick: () => Navigator.pop(context),
+                    ),
+                    GameBoardButtons(
+                      icon: 'assets/svgs/game_buttons/message.svg',
+                    ),
+                    GameBoardButtons(
+                      icon: 'assets/svgs/game_buttons/left_arrow.svg',
+                    ),
+                    GameBoardButtons(
+                      icon: 'assets/svgs/game_buttons/right_arrow.svg',
+                    ),
+                  ],
+                ),
               ),
             )
           ],
         ),
       ),
-    );
-  }
-}
-
-class GamePlayerProfile extends StatelessWidget {
-  const GamePlayerProfile({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-            border: Border.all(color: kBorderGray),
-            borderRadius: BorderRadius.circular(10)),
-        padding: EdgeInsets.all(3),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CircleAvatar(
-              radius: 20,
-            ),
-            10.0.sbW,
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Remy Arinze",
-                  style: TextStyle(fontSize: 12),
-                ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.badge,
-                      size: 13,
-                    ),
-                    3.0.sbW,
-                    Text(
-                      'Rank 12',
-                      style: TextStyle(fontSize: 11),
-                    )
-                  ],
-                )
-              ],
-            )
-          ],
-        ));
-  }
-}
-
-class GameBoardButtons extends StatelessWidget {
-  const GameBoardButtons({super.key, required this.icon});
-
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: mediaQuery(context).width * 0.24,
-      height: 50,
-      decoration: BoxDecoration(color: kBorderGray),
-      child: Center(
-          child: Icon(
-        icon,
-        size: 15,
-      )),
-    );
-  }
-}
-
-class PlayerTimer extends StatelessWidget {
-  const PlayerTimer({
-    super.key,
-    required String timeString,
-    required bool isWhiteTurn,
-    required this.isWhite,
-  })  : _timeString = timeString,
-        _isWhiteTurn = isWhiteTurn;
-
-  final String _timeString;
-  final bool _isWhiteTurn;
-  final bool isWhite;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: kBorderGray,
-      ),
-      child: Row(children: [
-        Icon(
-          Icons.timer,
-          color: Color.fromARGB(255, 0, 140, 255),
-        ),
-        Text(_timeString as String,
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.bold,
-              color:
-                  _isWhiteTurn ? Color.fromARGB(255, 0, 140, 255) : kTileAccent,
-            )),
-      ]),
     );
   }
 }

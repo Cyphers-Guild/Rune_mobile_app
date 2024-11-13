@@ -9,6 +9,8 @@ import 'package:rune/imports.dart';
 
 import 'package:rune/widgets/backgroundWidget.dart';
 
+import '../../widgets/custom_textField.dart';
+
 class Username extends StatelessWidget {
   const Username({super.key});
 
@@ -52,17 +54,7 @@ class Username extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
                 ),
                 5.0.sbH,
-                const TextField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent),
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      fillColor: Color.fromARGB(255, 38, 48, 43),
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      contentPadding: EdgeInsets.all(5),
-                      filled: false),
-                ),
+                CustomTextField(),
               ],
             ),
           ),

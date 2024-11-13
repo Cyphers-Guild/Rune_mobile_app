@@ -180,7 +180,7 @@ class NftCard extends StatelessWidget {
                   Row(
                     children: [
                       const SizedBox(
-                          width: 50,
+                          width: 80,
                           height: 50,
                           child: Button(
                             text: 'Buy',

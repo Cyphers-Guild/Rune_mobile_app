@@ -44,5 +44,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-// Theres a bug on queena dn king
-// need to fix that
