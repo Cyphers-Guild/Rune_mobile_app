@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:rune/imports.dart';
 import 'package:rune/ui/views/explore/tournaments.dart';
-import 'package:rune/widgets/main_appBar.dart';
+import 'package:rune/widgets/shared/main_appBar.dart';
 
 class Explore extends StatelessWidget {
   @override
@@ -25,17 +22,20 @@ class Explore extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (context) => TournamentsScreen()));
                 },
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'Open Tournaments',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: AppConstant.white,
+                          fontWeight: FontWeight.w500),
                     ),
                     Icon(
                       Icons.arrow_forward_ios_sharp,
                       size: 16,
+                      color: Colors.grey.shade600,
                     ),
                   ],
                 ),
@@ -54,9 +54,22 @@ class Explore extends StatelessWidget {
               30.0.sbH,
 
               // Playing Now Section
-              Text(
-                'Ongoing Games',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              Row(
+                children: [
+                  const Text(
+                    'Ongoing Games',
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: AppConstant.white,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  Spacer(),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.grey.shade600,
+                    size: 15,
+                  )
+                ],
               ),
               ...ongoingGames
                   .map((game) => PlayingNowCard(game: game))
@@ -85,16 +98,22 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5),
-      color: Color.fromARGB(255, 250, 250, 250),
+      color: AppConstant.opaqueBg,
       child: ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 1),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 1),
         leading: CircleAvatar(
           radius: 25,
           backgroundImage: AssetImage(image),
         ),
         title: Text(title,
-            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-        subtitle: Text(dateRange),
+            style: const TextStyle(
+                fontSize: 15,
+                color: AppConstant.accentWhite,
+                fontWeight: FontWeight.bold)),
+        subtitle: Text(
+          dateRange,
+          style: const TextStyle(color: AppConstant.accentWhite),
+        ),
       ),
     );
   }
@@ -145,7 +164,7 @@ class PlayingNowCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.grey.shade100,
+      color: AppConstant.opaqueBg,
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 1),
@@ -154,8 +173,14 @@ class PlayingNowCard extends StatelessWidget {
           backgroundImage: NetworkImage(game.countryFlagUrl),
         ),
         title: Text('${game.title} ${game.username}',
-            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-        subtitle: Text('${game.rating}'),
+            style: const TextStyle(
+                fontSize: 15,
+                color: AppConstant.accentWhite,
+                fontWeight: FontWeight.bold)),
+        subtitle: Text(
+          '${game.rating}',
+          style: const TextStyle(color: AppConstant.accentWhite),
+        ),
       ),
     );
   }

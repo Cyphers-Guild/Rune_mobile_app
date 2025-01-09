@@ -45,9 +45,8 @@ class _MintState extends State<Mint> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppConstant.bgColor,
         elevation: 0,
         actions: const [
           Padding(
@@ -55,7 +54,7 @@ class _MintState extends State<Mint> {
             child: Text(
               'Rank #10',
               style: TextStyle(
-                  color: Colors.black,
+                  color: AppConstant.accentWhite,
                   fontSize: 12,
                   fontWeight: FontWeight.bold),
             ),
@@ -66,7 +65,7 @@ class _MintState extends State<Mint> {
           child: Row(
             children: [
               CircleAvatar(
-                backgroundColor: kGrayAccent,
+                backgroundColor: AppConstant.accentWhite,
                 child: SvgPicture.asset(
                   'assets/svgs/menu.svg',
                   width: 30,
@@ -102,7 +101,8 @@ class _MintState extends State<Mint> {
                         ),
                         child: const Text(
                           'NFT Store',
-                          style: TextStyle(color: Colors.white, fontSize: 13),
+                          style: TextStyle(
+                              color: AppConstant.accentWhite, fontSize: 13),
                         ),
                       ),
                     );
@@ -157,7 +157,7 @@ class NftCard extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 20.0),
       child: Card(
         elevation: 0,
-        color: Colors.grey.shade100,
+        color: Colors.grey.withOpacity(0.1),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Row(
           children: [
@@ -179,16 +179,21 @@ class NftCard extends StatelessWidget {
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      const SizedBox(
-                          width: 80,
-                          height: 50,
-                          child: Button(
-                            text: 'Buy',
-                          )),
-                      const SizedBox(width: 8),
                       Text(
                         'Price: $price',
-                        style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                        style: const TextStyle(
+                            color: AppConstant.accentWhite, fontSize: 12),
+                      ),
+                      10.0.sbW,
+                      TextButton(
+                        style: ButtonStyle(
+                            padding: MaterialStateProperty.all(EdgeInsets.zero),
+                            foregroundColor: MaterialStateProperty.all(green3)),
+                        child: const Text(
+                          'Buy',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        onPressed: () {},
                       ),
                     ],
                   ),

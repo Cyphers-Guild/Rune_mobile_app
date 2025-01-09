@@ -1,217 +1,272 @@
+import 'dart:async';
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rune/imports.dart';
+import 'package:lottie/lottie.dart';
 
-class Home extends StatelessWidget {
+import 'package:rune/imports.dart';
+import 'package:rune/ui/views/explore/tournaments.dart';
+import 'package:rune/ui/views/main/Profile.dart';
+import 'package:rune/ui/views/play_game/challenge_bot.dart';
+import 'package:widget_and_text_animator/widget_and_text_animator.dart';
+
+import '../../../widgets/home/game_card.dart';
+import '../../../widgets/home/tournament_tile.dart';
+import '../play_game/game_play_menu.dart';
+
+class Home extends StatefulWidget {
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  final PageController _pageController = PageController();
+  late Timer _autoScrollTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the timer to auto-scroll every second
+    _autoScrollTimer = Timer.periodic(
+      const Duration(seconds: 2),
+      (Timer timer) {
+        if (_pageController.hasClients) {
+          int nextPage =
+              (_pageController.page!.toInt() + 1) % 3; // Loop back to the start
+          _pageController.animateToPage(
+            nextPage,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
+        }
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _autoScrollTimer.cancel();
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kBgColor,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: kBgColor,
-        elevation: 0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  backgroundColor: kGrayAccent,
-                  child: SvgPicture.asset(
-                    'assets/svgs/menu.svg',
-                    width: 30,
-                  ),
-                ),
-                10.0.sbW,
-                const Text("hi.! Jay",
-                    style: TextStyle(color: Colors.black, fontSize: 14)),
-              ],
-            ),
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(6),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Text("1500p",
-                      style: TextStyle(color: Colors.black, fontSize: 12)),
-                ),
-                const SizedBox(width: 8),
-                CircleAvatar(
-                  backgroundColor: kBorderGray,
-                  radius: 15,
-                  child: SvgPicture.asset(
-                    'assets/svgs/medal.svg',
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Rune Header Section
-
-            // Main Game Options Grid
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Stack(
-                children: [
-                  const Text("Rune",
-                      style: TextStyle(
-                          fontSize: 60,
-                          fontFamily: 'Ojuju',
-                          fontWeight: FontWeight.w700)),
-                  Align(
-                      alignment: Alignment.topRight,
-                      child: SvgPicture.asset('assets/svgs/b.svg')),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 50.0),
-                    child: Row(
+                // Rune Header Section
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Row(
                       children: [
-                        SizedBox(
-                          height: mediaQuery(context).height * 0.30,
-                          width: mediaQuery(context).width * 0.45,
-                          child: Expanded(
+                        Text("hi.! Jay",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 15)),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Text("1500p",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 12)),
+                        const SizedBox(width: 8),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Profile()));
+                          },
+                          child: CircleAvatar(
+                            backgroundColor: Colors.grey.shade300,
+                            radius: 15,
+                            child: Icon(Icons.person),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                // Main Game Options Grid
+                Stack(
+                  children: [
+                    Text("Rune",
+                        style: TextStyle(
+                            fontSize: 60,
+                            fontFamily: 'Ojuju',
+                            color: Colors.grey.shade500,
+                            fontWeight: FontWeight.w700)),
+                    Align(
+                        alignment: Alignment.topRight,
+                        child: SvgPicture.asset('assets/svgs/b.svg')),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 35.0),
+                      child: Row(
+                        children: [
+                          Expanded(
                             child: GameOptionCard(
-                              title: "Competitive\nPlayer vs player",
+                              title: const Text(
+                                "Competitive\nPlayer vs \n Player",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w600),
+                              ),
                               icon: Icons.sports_esports,
-                              widget: SvgPicture.asset(
-                                  'assets/svgs/play_piece.svg'),
+                              widget: WidgetAnimator(
+                                atRestEffect: WidgetRestingEffects.wave(),
+                                child: Image.asset(
+                                  'assets/images/rook1.png',
+                                  width: 50,
+                                ),
+                              ),
                               hasOpacity: false,
                               playerCount: "84 / 24",
-                              color: Colors.black,
+                              ontap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => GamePlayMenu())),
+                              color: Color.fromARGB(146, 19, 19, 19),
                               textColor: Colors.white,
                             ),
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              GameOptionCard(
-                                title: "Play against AI",
-                                icon: Icons.computer,
-                                level: "Level 2",
-                                color: Colors.grey.shade700,
-                                textColor: Colors.white,
-                              ),
-                              const SizedBox(height: 8),
-                              GameOptionCard(
-                                title: "Challenge a friend",
-                                icon: Icons.group,
-                                color: Colors.grey.shade300,
-                                textColor: Colors.black,
-                              ),
-                            ],
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                GameOptionCard(
+                                  title: const Text(
+                                    'Challenge a\nBot',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  ontap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ChallengeBot())),
+                                  icon: Icons.computer,
+                                  widget: Lottie.asset(
+                                      animate: true,
+                                      'assets/json/robot_3.json',
+                                      width: 45),
+                                  level: "Lois",
+                                  color: Color.fromARGB(255, 27, 50, 39),
+                                  textColor: AppConstant.accentWhite,
+                                ),
+                                const SizedBox(height: 8),
+                                GameOptionCard(
+                                  players: [],
+                                  title: const Text(
+                                    "Enter a Tournament",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  ontap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                TournamentsScreen()));
+                                  },
+                                  widget: SizedBox(),
+                                  icon: Icons.group,
+                                  color: const Color.fromARGB(255, 25, 119, 74),
+                                  textColor: AppConstant.accentWhite,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            // View More Section
-
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 10.0, bottom: 5),
-                    child: Text(
-                      'Ongoing Tournament',
-                      style: GoogleFonts.inter(
-                          fontSize: 13, color: Colors.grey.shade500),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    width: mediaQuery(context).width,
-                    height: 50,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
+                  ],
+                ),
+                // View More Section
+                5.0.sbH,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey.shade700),
-                              borderRadius: BorderRadius.circular(10)),
-                          height: 50,
-                          width: mediaQuery(context).width * 0.7,
-                          child: Row(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(left: 2, right: 10),
-                                height: 45,
-                                width: mediaQuery(context).width * 0.2,
-                                decoration: BoxDecoration(
-                                    color: kBorderGray,
-                                    borderRadius: BorderRadius.circular(5)),
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text('Venny'),
-                                  5.0.sbW,
-                                  Text('VS'),
-                                  5.0.sbW,
-                                  Text('Cal'),
-                                ],
-                              )
-                            ],
-                          ),
+                        Text(
+                          'Playing now',
+                          style: GoogleFonts.inter(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: AppConstant.accentWhite),
                         ),
-                        const SizedBox(width: 8),
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey.shade500),
-                              borderRadius: BorderRadius.circular(10)),
-                          height: 50,
-                          width: mediaQuery(context).width * 0.7,
-                        ),
+                        IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              size: 15,
+                              Icons.arrow_forward_ios,
+                            ))
                       ],
                     ),
-                  ),
-                ],
-              ),
-            ),
-            // Ongoing Tournament Section
-            Padding(
-              padding: EdgeInsets.only(left: 10.0, right: 10, top: 20),
-              child: Text(
-                'Last Game Analysis',
-                style: GoogleFonts.inter(
-                    fontSize: 13, color: Colors.grey.shade500),
-              ),
-            ),
-            ListView(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                TournamentListTile(
-                    player: "Fredrick",
-                    rank: "#23",
-                    status: "Blitz",
-                    live: true),
-                TournamentListTile(
-                    player: "Adams", rank: "#10", status: "Rapid", live: false),
+                    SizedBox(
+                      height: 80, // Set height for the carousel
+                      child: PageView.builder(
+                        controller: _pageController,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 3, // Adjust based on the number of items
+                        itemBuilder: (context, index) {
+                          return const Playing();
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                // Ongoing Tournament Section
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Game Analysis',
+                        style: GoogleFonts.inter(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: AppConstant.accentWhite,
+                        )),
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          size: 15,
+                          Icons.arrow_forward_ios,
+                        ))
+                  ],
+                ),
+                ListView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    TournamentListTile(
+                        player: "Fredrick",
+                        rank: "#23",
+                        status: "Blitz",
+                        live: true),
+                    TournamentListTile(
+                        player: "Adams",
+                        rank: "#10",
+                        status: "Rapid",
+                        live: false),
+                  ],
+                ),
               ],
             ),
-          ],
+          ),
         ),
       ),
       // Bottom Navigation Bar
@@ -219,132 +274,45 @@ class Home extends StatelessWidget {
   }
 }
 
-class GameOptionCard extends StatelessWidget {
-  final String title;
-  final IconData icon;
-  final String? playerCount;
-  final String? level;
-  final Color color;
-  final bool? hasOpacity;
-  final Color textColor;
-  final Widget? widget;
-
-  GameOptionCard({
-    required this.title,
-    required this.icon,
-    this.playerCount,
-    this.level,
-    this.hasOpacity,
-    required this.color,
-    this.widget,
-    required this.textColor,
+class Playing extends StatelessWidget {
+  const Playing({
+    super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, 'gameboard');
-      },
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12), // Clipping for rounded edges
-        child: Stack(
-          children: [
-            // Backdrop filter for the blur effect
-            BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-              child: Container(
-                color: color.withOpacity(
-                    0.3), // Adjust the opacity to control blur visibility
-              ),
-            ),
-            // Main content of the card
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: hasOpacity != null ? color : color.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  widget != null
-                      ? widget!
-                      : Icon(icon, color: textColor, size: 25),
-                  const SizedBox(height: 8),
-                  Text(
-                    title,
-                    style: TextStyle(
-                        color: textColor,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 5),
-                  if (playerCount != null)
-                    Text(
-                      playerCount!,
-                      style: TextStyle(color: textColor, fontSize: 13),
-                    ),
-                  if (level != null)
-                    Text(
-                      level!,
-                      style: TextStyle(color: textColor, fontSize: 13),
-                    ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Icon(
-                      Icons.arrow_forward,
-                      color: textColor,
-                      size: 16,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class TournamentListTile extends StatelessWidget {
-  final String player;
-  final String rank;
-  final String status;
-  final bool live;
-
-  TournamentListTile({
-    required this.player,
-    required this.rank,
-    required this.status,
-    this.live = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundColor: Colors.grey.shade300,
-        child: Text(player[0]),
-      ),
-      title: Text(
-        player,
-        style: const TextStyle(fontSize: 14),
-      ),
-      subtitle: Text(
-        rank,
-        style: const TextStyle(fontSize: 13),
-      ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
+      decoration: BoxDecoration(
+          color: AppConstant.opaqueBg,
+          border: Border.all(color: Colors.grey.shade900),
+          borderRadius: BorderRadius.all(Radius.circular(5))),
+      width: mediaQuery(context).width,
+      child: Row(
         children: [
-          Text(status, style: const TextStyle(color: Colors.black)),
-          if (live)
-            const Padding(
-              padding: EdgeInsets.only(left: 8),
-              child: Text("live", style: TextStyle(color: Colors.green)),
+          Container(
+            color: Colors.red,
+            padding: const EdgeInsets.all(2),
+            child: const Text(
+              'GM',
+              style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
             ),
+          ),
+          5.0.sbW,
+          const Text(
+            ' Daniel Ibok',
+            style: TextStyle(fontSize: 15),
+          ),
+          5.0.sbW,
+          const Text('(233)'),
+          const Spacer(),
+          const Row(
+            children: [
+              Icon(Icons.electric_rickshaw_rounded),
+              Text('Blitz'),
+            ],
+          )
         ],
       ),
     );

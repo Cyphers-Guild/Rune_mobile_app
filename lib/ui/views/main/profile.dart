@@ -1,16 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:rune/helpers/constants.dart';
-import 'package:rune/helpers/helpers.dart';
 import 'package:rune/imports.dart';
 
 class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppConstant.bgColor,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        leading: AppConstant.backIcon(context: context),
+        backgroundColor: AppConstant.bgColor,
         elevation: 0,
         automaticallyImplyLeading: false,
       ),
@@ -19,6 +17,7 @@ class Profile extends StatelessWidget {
         child: ListView(
           children: [
             // Profile section
+
             Stack(
               children: [
                 // Profile Image
@@ -35,15 +34,23 @@ class Profile extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Daniel',
                       style: TextStyle(
                         fontSize: 45,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: AppConstant.accentWhite,
+                        shadows: [
+                          Shadow(
+                            offset: Offset(2, 2),
+                            blurRadius: 4.0,
+                            color:
+                                Colors.black.withOpacity(0.7), // Shadow color
+                          ),
+                        ],
                       ),
                     ),
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.only(left: 20.0),
                       child: Text(
                         'Johnson',
@@ -51,18 +58,30 @@ class Profile extends StatelessWidget {
                           fontSize: 45,
                           fontWeight: FontWeight.bold,
                           leadingDistribution: TextLeadingDistribution.even,
-                          color: Colors.black,
+                          color: AppConstant.accentWhite,
+                          shadows: [
+                            Shadow(
+                              offset: Offset(2, 2),
+                              blurRadius: 4.0,
+                              color:
+                                  Colors.black.withOpacity(0.7), // Shadow color
+                            ),
+                          ],
                         ),
                       ),
                     ),
                     50.0.sbH,
                     Row(
                       children: [
-                        SvgPicture.asset('assets/svgs/medal.svg'),
-                        SizedBox(width: 4),
-                        Text(
+                        SvgPicture.asset(
+                          'assets/svgs/medal.svg',
+                          color: AppConstant.accentWhite,
+                        ),
+                        const SizedBox(width: 4),
+                        const Text(
                           'Rank 12',
-                          style: TextStyle(color: Colors.black, fontSize: 13),
+                          style: TextStyle(
+                              color: AppConstant.accentWhite, fontSize: 13),
                         ),
                       ],
                     ),
@@ -71,7 +90,7 @@ class Profile extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 5),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
+                        border: Border.all(color: AppConstant.accentWhite),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: const Text(
@@ -79,7 +98,7 @@ class Profile extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: AppConstant.accentWhite,
                         ),
                       ),
                     ),
@@ -95,7 +114,7 @@ class Profile extends StatelessWidget {
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: AppConstant.accentWhite,
               ),
             ),
             10.0.sbH,
@@ -134,7 +153,7 @@ class Profile extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: AppConstant.accentWhite,
               ),
             ),
             10.0.sbH,
@@ -151,7 +170,7 @@ class Profile extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: AppConstant.accentWhite,
               ),
             ),
           ],
@@ -166,7 +185,7 @@ class Profile extends StatelessWidget {
       width: mediaQuery(context).width * 0.28,
       height: 100,
       decoration: BoxDecoration(
-        border: Border.all(color: const Color.fromARGB(255, 0, 0, 0)),
+        border: Border.all(color: AppConstant.accentWhite),
         borderRadius: BorderRadius.circular(8),
         image: imagePath != null
             ? DecorationImage(
@@ -206,13 +225,13 @@ class Profile extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.flash_on, color: Colors.black),
+                  const Icon(Icons.flash_on, color: AppConstant.accentWhite),
                   const SizedBox(width: 4),
                   Text(
                     title,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: AppConstant.accentWhite,
                     ),
                   ),
                 ],
@@ -222,7 +241,7 @@ class Profile extends StatelessWidget {
                 status,
                 style: TextStyle(
                   fontSize: 14,
-                  color: Colors.grey.shade600,
+                  color: Colors.grey.shade400,
                 ),
               ),
             ],

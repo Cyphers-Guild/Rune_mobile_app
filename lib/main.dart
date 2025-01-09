@@ -1,9 +1,18 @@
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:rune/core/services/locator.dart';
 import 'package:rune/imports.dart';
+import 'package:rune/ui/view_models/auth_view_model.vm.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  setupLocator();
+  await dotenv.load(fileName: ".env");
+  runApp(ChangeNotifierProvider(
+    create: (_) => AuthViewModel(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -12,8 +21,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.white, // Set the status bar color
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: bgColor, // Set the status bar color
       statusBarIconBrightness:
           Brightness.light, // Light or dark status bar icons
       statusBarBrightness:
@@ -22,15 +31,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Rune',
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          scaffoldBackgroundColor: AppConstant.bgColor,
           useMaterial3: true,
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: Colors.black,
           ),
           textTheme: TextTheme(
-              bodyLarge: GoogleFonts.raleway(color: kTextColor),
-              bodySmall: GoogleFonts.raleway(color: kTextColor),
-              bodyMedium: const TextStyle(fontFamily: 'Ojuju'))),
+              bodyLarge:
+                  GoogleFonts.chakraPetch(color: AppConstant.accentWhite),
+              bodySmall:
+                  GoogleFonts.chakraPetch(color: AppConstant.accentWhite),
+              bodyMedium:
+                  GoogleFonts.chakraPetch(color: AppConstant.accentWhite))),
       home: const SplashScreen(),
       routes: {
         'loginScreen': (context) => const LoginScreen(),

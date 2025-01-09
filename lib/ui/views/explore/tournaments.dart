@@ -1,26 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rune/imports.dart';
+import 'package:rune/widgets/shared/app_bar.dart';
 
 class TournamentsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Tournaments', style: TextStyle(fontSize: 15)),
-        centerTitle: true,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: 18,
-          ),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ),
+      appBar: CustomAppBar(context, title: 'Play'),
       body: ListView.builder(
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         itemCount: tournaments.length,
         itemBuilder: (context, index) {
           final tournament = tournaments[index];
@@ -39,14 +28,14 @@ class TournamentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color.fromARGB(255, 240, 240, 240),
-      margin: EdgeInsets.symmetric(vertical: 8.0),
+      color: AppConstant.opaqueBg,
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Tournament Image
           ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
             child: Image.asset(
               tournament.imageUrl,
               height: 150,
