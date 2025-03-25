@@ -1,23 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Explore',
-      theme: ThemeData(
-        primarySwatch: Colors.grey,
-        brightness: Brightness.dark,
-      ),
-      home: ExploreScreen(),
-    );
-  }
-}
-
 class ExploreScreen extends StatefulWidget {
   @override
   _ExploreScreenState createState() => _ExploreScreenState();

@@ -16,22 +16,23 @@ class PlayerTimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        color: kBorderGray,
+   color:const Color.fromARGB(255, 37, 37, 37),
       ),
       child: Row(children: [
         Icon(
           Icons.timer,
-          color: Color.fromARGB(255, 0, 140, 255),
+          size: 18,
+          color: kBgColor,
         ),
-        Text(_timeString as String,
+        Text(_timeString,
             style: TextStyle(
-              fontSize: 13,
+              fontSize: 15,
               fontWeight: FontWeight.bold,
               color:
-                  _isWhiteTurn ? Color.fromARGB(255, 0, 140, 255) : kTileAccent,
+                  _isWhiteTurn ? Colors.white : Colors.grey,
             )),
       ]),
     );

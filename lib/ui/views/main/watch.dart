@@ -1,27 +1,62 @@
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:rune/helpers/constants.dart';
 import 'package:rune/imports.dart';
-import 'package:rune/widgets/main_appBar.dart';
+
+import '../../../widgets/shared/main_appBar.dart';
 
 class Watch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MainAppBarWidget(title: 'Watch'),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 8,
-            childAspectRatio: 0.8,
-          ),
-          itemCount: chessEvents.length,
-          itemBuilder: (context, index) {
-            final event = chessEvents[index];
-            return ChessEventCard(event: event);
-          },
-        ),
+      body: PageView.builder(
+        scrollDirection: Axis.vertical, // Vertical scrolling
+        itemCount: chessEvents.length,
+        itemBuilder: (context, index) {
+          final event = chessEvents[index];
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              20.0.sbH,
+              ChessEventCard(event: event),
+              5.0.sbH,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            const Text(
+                              'Daniel Ibok ',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            10.0.sbW,
+                            const Text('Vs'),
+                            10.0.sbW,
+                            const Text(
+                              'Joseph Ibok',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                        10.0.sbH,
+                        CommentScrollWidget()
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -35,76 +70,113 @@ class ChessEventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.symmetric(vertical: 16.0),
       decoration: BoxDecoration(
-          color: Color.fromARGB(255, 240, 240, 240),
-          borderRadius: BorderRadius.circular(10)),
+        color: AppConstant.opaqueBg,
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: kTileAccent,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Text(
-                    event.title,
-                    style: const TextStyle(color: Colors.white, fontSize: 12),
-                  ),
-                ),
-                const SizedBox(width: 5),
-                Text(
-                  event.playerName,
-                  style: const TextStyle(color: Colors.black),
-                ),
-                const Spacer(),
-                const Icon(Icons.flag,
-                    color: Colors.white, size: 16), // Placeholder for the flag
-              ],
-            ),
-          ),
           // Chessboard Placeholder
-          Expanded(
-            child: SvgPicture.asset('assets/svgs/chess_board.svg'),
-          ),
-          // Game Result
-          // Timer
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: kTileAccent,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Text(
-                    event.title,
-                    style: const TextStyle(color: Colors.white, fontSize: 12),
-                  ),
-                ),
-                Row(
-                  children: [
-                    const Icon(Icons.timer, color: Colors.white, size: 16),
-                    const SizedBox(width: 5),
-                    Text(
-                      event.time,
-                      style: const TextStyle(color: Colors.black),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+          SvgPicture.asset(
+            'assets/svgs/chess_board.svg',
+            width: MediaQuery.of(context).size.width,
+            fit: BoxFit.cover,
           ),
         ],
+      ),
+    );
+  }
+}
+
+class CommentScrollWidget extends StatefulWidget {
+  @override
+  _CommentScrollWidgetState createState() => _CommentScrollWidgetState();
+}
+
+class _CommentScrollWidgetState extends State<CommentScrollWidget>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late ScrollController _scrollController;
+
+  final List<String> comments = [
+    "John Doe joined",
+    "Alice: Hello everyone!",
+    "Bob: This game is amazing!",
+    "Charlie joined",
+    "David: Go Hikaru!",
+    "Eve: Wow, what a move!",
+    "John Doe: Good luck to both players!",
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    )..repeat();
+    _scrollController = ScrollController();
+    _startAutoScroll();
+  }
+
+  void _startAutoScroll() {
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      if (_scrollController.hasClients) {
+        _scrollController
+            .animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(seconds: 10),
+          curve: Curves.linear,
+        )
+            .then((_) {
+          _scrollController.jumpTo(0);
+          _startAutoScroll();
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 150,
+      height: 100, // Ensure proper constraints for the comment box
+      child: ShaderMask(
+        shaderCallback: (bounds) {
+          return const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.transparent, // Fade out at the top
+              Colors.white, // Fully visible in the center
+              Colors.transparent, // Fade out at the bottom (optional)
+            ],
+            stops: [0.0, 0.4, 1.0],
+          ).createShader(bounds);
+        },
+        blendMode: BlendMode.dstIn,
+        child: ListView.builder(
+          controller: _scrollController,
+          itemCount: comments.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Text(
+                comments[index],
+                style: const TextStyle(color: Colors.white, fontSize: 12),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -133,9 +205,4 @@ final List<ChessEvent> chessEvents = [
   ChessEvent(
       title: 'IM', playerName: 'Marty', result: 'White Won', time: '0:08.6'),
   ChessEvent(title: 'GM', playerName: 'Jeffery', result: '', time: '0:09.9'),
-  ChessEvent(title: 'GM', playerName: 'Jeffery', result: '', time: '0:09.9'),
-  ChessEvent(title: 'GM', playerName: 'Jeffery', result: '', time: '0:09.9'),
-  ChessEvent(title: 'GM', playerName: 'Jeffery', result: '', time: '0:09.9'),
-  ChessEvent(title: 'GM', playerName: 'Jeffery', result: '', time: '0:09.9'),
-  // Add more events here
 ];

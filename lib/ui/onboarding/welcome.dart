@@ -4,7 +4,7 @@ import 'package:rune/helpers/constants.dart';
 
 import 'package:rune/imports.dart';
 
-import 'package:rune/widgets/backgroundWidget.dart';
+import 'package:rune/widgets/shared/backgroundWidget.dart';
 
 class Welcome extends StatelessWidget {
   const Welcome({super.key});

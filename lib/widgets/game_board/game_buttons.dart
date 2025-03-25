@@ -19,11 +19,12 @@ class GameBoardButtons extends StatelessWidget {
         width: mediaQuery(context).width * 0.20,
         height: 60,
         decoration: BoxDecoration(
-            color: kBorderGray, borderRadius: BorderRadius.circular(5)),
+            color: Color.fromARGB(255, 22, 22, 22), borderRadius: BorderRadius.circular(5)),
         child: Center(
             child: SvgPicture.asset(
           icon,
-          width: 15,
+          color: Colors.white,
+          width: 16,
         )),
       ),
     );

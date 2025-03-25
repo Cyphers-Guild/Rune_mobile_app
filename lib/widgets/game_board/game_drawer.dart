@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rune/helpers/constants.dart';
 import 'package:rune/imports.dart';
-import 'package:rune/widgets/custom_textField.dart';
+import 'package:rune/widgets/shared/custom_textField.dart';
 import 'game_drawer_betting_screen.dart';
 
 class GameBoardDrawer extends StatelessWidget {
@@ -57,11 +57,11 @@ class TradingScreen extends StatelessWidget {
               TabBar(
                 indicatorSize: TabBarIndicatorSize.tab,
                 dividerColor: Colors.transparent,
-                labelStyle:
-                    GoogleFonts.raleway(color: Colors.white, fontSize: 12),
-                indicator: const BoxDecoration(
-                  color: Colors.black,
-                ),
+                unselectedLabelStyle:
+                    GoogleFonts.raleway(color: bgColor, fontSize: 12),
+                labelStyle: GoogleFonts.raleway(
+                    color: green1, fontSize: 15, fontWeight: FontWeight.bold),
+                indicator: const BoxDecoration(),
                 tabs: const [
                   Tab(
                     text: 'RA',
@@ -92,11 +92,14 @@ class TradingScreen extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Left Side: Trading Panel
-                      _buildTradingPanel(),
-                      const SizedBox(width: 8),
-                      // Right Side: Order Book
                       _buildOrderBook(),
+                      // Left Side: Trading Panel
+
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 300, // Set height to prevent unbounded error
+                        child: _buildTradingPanel(),
+                      ),
                     ],
                   ),
                 ]),
@@ -114,15 +117,12 @@ class TradingScreen extends StatelessWidget {
       children: [
         // Buy/Sell Toggl
         const SizedBox(height: 8),
-        const Text("Available", style: TextStyle(color: Colors.grey)),
+        const Text("Balance:",
+            style: TextStyle(color: Color.fromARGB(255, 0, 0, 0))),
         const Text("0.00002792 USDT", style: TextStyle()),
         const SizedBox(height: 16),
         // Price Input Field
         _buildInputField("86645.69"),
-        const SizedBox(height: 8),
-
-        // Quantity Input Field
-        _buildInputField("Qty"),
         const SizedBox(height: 8),
 
         // TP/SL Button

@@ -1,6 +1,6 @@
 import 'package:rune/imports.dart';
 
-import 'package:rune/widgets/backgroundWidget.dart';
+import 'package:rune/widgets/shared/backgroundWidget.dart';
 
 class SelectAvatar extends StatelessWidget {
   const SelectAvatar({super.key});

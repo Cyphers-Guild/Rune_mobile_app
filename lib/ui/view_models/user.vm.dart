@@ -6,7 +6,7 @@ class UserViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  final UserRepository _repository = locator<UserRepository>();
+  final UserRepository _repository = getIt<UserRepository>();
 
   fetchUser() {}
 }

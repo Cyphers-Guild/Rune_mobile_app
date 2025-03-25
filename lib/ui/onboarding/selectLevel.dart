@@ -1,40 +1,108 @@
+import 'dart:io';
+
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:rune/imports.dart';
+import 'package:rune/ui/view_models/auth_view_model.vm.dart';
 
-import 'package:rune/widgets/backgroundWidget.dart';
+import 'package:rune/widgets/shared/backgroundWidget.dart';
 
-class SelectLevel extends StatelessWidget {
-  const SelectLevel({super.key});
+class SelectLevel extends StatefulWidget {
+  const SelectLevel({super.key, this.body});
+  final Map<String, dynamic>? body;
+
+  @override
+  State<SelectLevel> createState() => _SelectLevelState();
+}
+
+class _SelectLevelState extends State<SelectLevel> {
+  File? image;
+  Map<String, dynamic>? selectedLevel;
+  @override
+  initState() {
+    super.initState();
+    image = File(widget.body?['image'] ?? '');
+  }
+
+  registerUser() {
+    Map<String, dynamic>? body = {
+      ...widget.body!,
+      'level': selectedLevel!['value']
+    };
+    print(body);
+
+    Provider.of<AuthViewModel>(context, listen: false)
+        .registerUser(body: body, context: context);
+  }
 
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> levelDetails = [
-      {'title': 'Newbie', 'icon': 'assets/svgs/rook.svg'},
-      {'title': 'Beginner', 'icon': 'assets/svgs/knight.svg'},
-      {'title': 'Intermediate', 'icon': 'assets/svgs/bishop.svg'},
-      {'title': 'Advanced', 'icon': 'assets/svgs/queen.svg'},
+      {
+        'title': 'New to chess',
+        "value": "new_to_chess",
+        'icon': 'assets/svgs/rook.svg'
+      },
+      {
+        'title': 'Beginner',
+        "value": "beginner",
+        'icon': 'assets/svgs/knight.svg'
+      },
+      {
+        'title': 'Intermediate',
+        "value": "intermediate",
+        'icon': 'assets/svgs/bishop.svg'
+      },
+      {
+        'title': 'Advanced',
+        "value": "advanced",
+        'icon': 'assets/svgs/queen.svg'
+      },
     ];
     List<Widget> levels = List.generate(
         4,
-        (index) => Container(
-              width: mediaQuery(context).width * 0.4,
-              height: 130,
-              decoration: BoxDecoration(
-                  color: kTileAccent, borderRadius: BorderRadius.circular(5)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    levelDetails[index]['icon'],
-                    width: 40,
-                  ),
-                  5.0.sbH,
-                  Text(
-                    levelDetails[index]['title'],
-                    style: GoogleFonts.raleway(color: Colors.white),
-                  )
-                ],
+        (index) => GestureDetector(
+              onTap: () {
+                setState(() {
+                  selectedLevel = levelDetails[index];
+                });
+              },
+              child: Container(
+                width: mediaQuery(context).width,
+                margin: const EdgeInsets.symmetric(vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+                decoration: BoxDecoration(
+                    color:
+                        selectedLevel?['title'] == levelDetails[index]['title']
+                            ? AppConstant.accentWhite
+                            : kTileAccent,
+                    borderRadius: BorderRadius.circular(20)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      levelDetails[index]['title'],
+                      style: GoogleFonts.chakraPetch(
+                        color: selectedLevel?['title'] ==
+                                levelDetails[index]['title']
+                            ? AppConstant.bgColor
+                            : Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SvgPicture.asset(
+                      levelDetails[index]['icon'],
+                      width: 20,
+                      color: selectedLevel?['title'] ==
+                              levelDetails[index]['title']
+                          ? AppConstant.bgColor
+                          : null,
+                    ),
+                  ],
+                ),
               ),
             ));
     return BackgroundWidget(
@@ -42,15 +110,29 @@ class SelectLevel extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.only(top: 40),
-            child: CircleAvatar(
-              radius: 40,
-              backgroundColor: kBorderGray,
-              child: SvgPicture.asset(
-                'assets/svgs/logo.svg',
-                width: 25,
+          Align(
+            alignment: Alignment.topLeft,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: const Icon(
+                Icons.arrow_back_ios,
+                color: AppConstant.accentWhite,
+                size: 20,
               ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 40),
+            child: CircleAvatar(
+              radius: 35,
+              backgroundImage: image != null
+                  ? FileImage(image!) // Display selected image
+                  : null,
+              child: image == null || image != null && image!.path.isEmpty
+                  ? Image.asset('assets/images/image_holder.png')
+                  : null,
             ),
           ),
           15.0.sbH,
@@ -59,23 +141,26 @@ class SelectLevel extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          10.0.sbH,
+          5.0.sbH,
           Text(
-            'Your starting Point for match pairings',
+            'Your starting point for match pairings',
             textAlign: TextAlign.center,
-            style: GoogleFonts.raleway(),
+            style: GoogleFonts.chakraPetch(),
           ),
           50.0.sbH,
           Expanded(
-              child: Wrap(
-            spacing: 20,
-            runSpacing: 20,
-            children: [...levels],
-          )),
+            child: Column(
+              children: [...levels],
+            ),
+          ),
           Button(
-            text: 'Next',
-            action: () => Navigator.pushNamed(context, 'selectWallet'),
-          )
+            text: 'Continue',
+            enabled: selectedLevel != null,
+            action: () {
+              registerUser();
+            },
+          ),
+          15.0.sbH,
         ],
       ),
     );
@@ -89,7 +174,7 @@ class TextInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return const TextField(
       decoration: InputDecoration(
           border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.transparent),
